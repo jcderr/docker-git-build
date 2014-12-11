@@ -1,0 +1,5 @@
+dgbuild.egg-info
+*.pyc
+*.swp
+*.pyo
+
