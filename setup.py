@@ -3,7 +3,7 @@ Docker build based on git tags
 """
 from setuptools import find_packages, setup
 
-version = '0.1.0'
+version = '0.1.1'
 
 install_requires = [
     'click',
@@ -17,7 +17,7 @@ tests_require = [
 
 setup(
     name='dgbuild',
-    version='0.1.0',
+    version=version,
     url='https://github.com/jcderr/docker-git-build',
     license='BSD',
     author='Jeremy Derr',
