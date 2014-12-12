@@ -40,18 +40,25 @@ def determine_next_build_number(repo, epoch, bugfix=False):
     days_since_epoch = days_since_epoch.days
 
     _last_build_number = last_build_number(repo)
-    _cur_x, _cur_y, _cur_z = _last_build_number.split('.')
+    _version = [int(i) for i in _last_build_number.split('.')]
+
+    _new_x, _new_y, _new_z = 0, 0, 0
 
     if not bugfix:
-        if days_since_epoch == _cur_x:
-            _cur_y = int(_cur_y) + 1
-        else:
-            _cur_x = days_since_epoch
-            _cur_y = 0
-    else:
-        _cur_z = int(_cur_z) + 1
+        # not bugfixing, so new build will be x = today
+        _new_x = days_since_epoch
 
-    return '.'.join([str(_cur_x), str(_cur_y), str(_cur_z)])
+        if days_since_epoch == _version[0]:
+            # previous builds exist today
+            warn('same day as last build.')
+            _new_y = _version[1] + 1
+        else:
+            _new_y = 0
+            _new_z = 0
+    else:
+        _new_x, _new_y, _new_z = _version[0], _version[1], _version[2] + 1
+
+    return '.'.join([str(_new_x), str(_new_y), str(_new_z)])
 
 
 def read_config():
